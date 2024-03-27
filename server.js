@@ -4,14 +4,15 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-// Forbinde til MongoDB
-mongoose.connect('mongodb://localhost:27017/undercovergame', { useNewUrlParser: true, useUnifiedTopology: true });
+// Forbinde til MongoDB Atlas
+// Erstat <username> med dit MongoDB Atlas-brugernavn og <password> med dit kodeord
+mongoose.connect('mongodb+srv://yonesswaidan:sgg59mcd@game-database.x2asuuz.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  console.log('Connected to MongoDB');
+  console.log('Connected to MongoDB Atlas');
 });
 
 // Skema til brugeroplysninger
