@@ -6,33 +6,36 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Forbinde til MongoDB Atlas
-// Erstat <username> med dit MongoDB Atlas-brugernavn og <password> med dit kodeord
-mongoose.connect('mongodb+srv://yonesswaidan:sgg59mcd@game-database.x2asuuz.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true });
+// Forbindelse til MongoDB Atlas
+mongoose.connect('mongodb+srv://yonesswaidan:sgg59mcd@game-database.x2asuuz.mongodb.net/game-database', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to MongoDB Atlas'))
+  .catch(error => console.error('Connection error:', error));
+
 const db = mongoose.connection;
+
+// Fejlhåndtering for MongoDB-forbindelse
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('Connected to MongoDB Atlas');
-});
 
 // Skema til brugeroplysninger
 const userSchema = new mongoose.Schema({
   playerName: String
 });
+
 const User = mongoose.model('User', userSchema);
 
 // Middleware for at parse JSON-anmodninger
 app.use(bodyParser.json());
 
-// Servér statiske filer fra rodmappen
-app.use(express.static(path.join(__dirname)));
+// Servér statiske filer fra en undermappe (f.eks. 'public')
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Post endpoint til at gemme brugeroplysninger
+// POST-endpunkt til at gemme brugeroplysninger
 app.post('/api/users', async (req, res) => {
-  const { playerNames } = req.body;
   try {
-    const newUsers = await User.insertMany(playerNames.map(name => ({ playerName: name })));
-    res.status(201).json({ message: 'Brugere oprettet', users: newUsers });
+    const { playerName } = req.body;
+    const newUser = new User({ playerName });
+    await newUser.save();
+    res.status(201).json({ message: 'Bruger oprettet', user: newUser });
   } catch (error) {
     res.status(500).json({ message: 'Der opstod en fejl', error: error.message });
   }
@@ -40,7 +43,7 @@ app.post('/api/users', async (req, res) => {
 
 // Servér index.html, når roden af webstedet besøges
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Start serveren
