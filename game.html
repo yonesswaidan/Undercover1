@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spillets Funktioner</title>
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+    <header>
+        <h1>Spillets Funktioner</h1>
+    </header>
+    <main>
+        <section class="setup">
+            <h2>Spilopsætning</h2>
+            <label for="numPlayers">Antal spillere:</label>
+            <input type="number" id="numPlayers" min="3" max="10" value="3">
+            <label for="numUndercovers">Antal undercovers:</label>
+            <input type="number" id="numUndercovers" min="1" max="3" value="1">
+            <button id="startSetupBtn">Start Spilopsætning</button>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Spillets Navn. Alle rettigheder forbeholdes.</p>
+    </footer>
+    <!-- Pege på din game.js-fil -->
+    <script src="game.js"></script>
+</body>
+</html>

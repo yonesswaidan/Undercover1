@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess</title>
+    <link rel="stylesheet" href="guess.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Guess the Word</h1>
+        <!-- Fjern teksten "The word will appear here." og erstatt med kortet de andre spillere havde -->
+        <div id="word-container">
+            <p id="word-placeholder"></p>
+        </div>
+        <div id="other-players-cards"></div> <!-- Container til at vise de andre spilleres kort -->
+        <input type="text" id="guess-input" placeholder="Enter your guess">
+        <button id="submit-guess">Submit Guess</button>
+        <p id="result"></p>
+    </div>
+    <script src="guess.js"></script>
+</body>
+</html>
